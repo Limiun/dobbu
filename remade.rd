@@ -1,0 +1,12 @@
+This is test
+1、创建本地仓库 在任意文件下git init
+2、在这个文件夹下创建或存放所需要上传的文件
+3、git add . （后面一个 . ，把所有的新东西提交，对于已有的项目理解为提交所有的已修改文件到暂存区）
+4、git commit 把项目提交到仓库
+5、因为本地的git 仓库和github仓库之间的传输时通过ssh加密的，所以设置一下连接
+	（1）创建ssh key 先看一下C:\Users\Administrator\.ssh 有没有id_rsa和id_rsa.pub这两个文件（没有就创建 ssh-keygen -t rsa -C “940811787@qq.com”）
+	（2）登录github ,找到setting 中的ssh and GPG KEYS,点击右上角的NEW SSH key,r然后title随便填，把刚刚生成的id_rsa.pub内的内容复制到Title下面的key内容框里面，最后点击Add ssh key ，就完成了ssh key的加密
+6、github 上建立仓库 创建好后生成的里面的ssh是等下要使用的
+7、git remote add origin  http:.........(这里就是上述的ssh地址)
+8、推送，现在关联好后可以把本地库的所有内容推送到远程仓库（github）上，通过：$git push -u origin master
+	
