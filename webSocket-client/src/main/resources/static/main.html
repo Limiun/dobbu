@@ -1,0 +1,84 @@
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1transitional.dtd">-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Netty-Websocket</title>
+    <script type="text/javascript" src="Msg.js"></script>
+    <script type="text/javascript">
+        // by zhengkai.blog.csdn.net
+        var socket;
+        if(!window.WebSocket){
+            window.WebSocket = window.MozWebSocket;
+        }
+        if(window.WebSocket){
+            // socket = new WebSocket("ws://127.0.0.1:12345/ws");
+            socket = new WebSocket("ws://127.0.0.1:12345/ws?uid=666^&amp=777");
+            socket.onmessage = function(event){
+
+                if (event.data instanceof ArrayBuffer){
+                    data =  Msg.Login(event.data);      //如果后端发送的是二进制帧（protobuf）会收到前面定义的类型
+                }else{
+                    data = event.data;                //后端返回的是文本帧时触发
+                }
+                let messagetest = Msg.Login.create();
+                alert(messagetest);
+                messagetest = event.data;
+                alert(messagetest);
+                messagetest = document.getElementById('responseText');
+                messagetest.value += event.data+"\r\n";
+                alert(messagetest);
+                // var ta = document.getElementById('responseText');
+                // ta.value += event.data+"\r\n";
+            };
+            socket.onopen = function(event){
+                var ta = document.getElementById('responseText');
+                ta.value = "Netty-WebSocket服务器。。。。。。连接  \r\n";
+            };
+            socket.onclose = function(event){
+                var ta = document.getElementById('responseText');
+                ta.value = "Netty-WebSocket服务器。。。。。。关闭 \r\n";
+            };
+        }else{
+            alert("您的浏览器不支持WebSocket协议！");
+        }
+        function send(message){
+            if(!window.WebSocket){return;}
+            if(socket.readyState == WebSocket.OPEN){
+                socket.send(message);
+            }else{
+                alert("WebSocket 连接没有建立成功！");
+            }
+
+        }
+
+        function send1(message){
+            if(!window.WebSocket){return;}
+            if(socket.readyState == WebSocket.OPEN){
+                socket.send(message);
+            }else{
+                alert("用户名密码发送失败");
+            }
+
+        }
+
+    </script>
+</head>
+<body>
+<form onSubmit="return false;">
+    <label>ID</label><input type="text" name="uid" value="${uid!!}" /> <br />
+    <label>TEXT</label><input type="text" name="message" value="这里输入消息" /> <br />
+    <br /> <input type="button" value="发送ws消息"
+                  onClick="send(this.form.uid.value+':'+this.form.message.value)" />
+    <label>userName</label><input type="text" name="userName" value="用户名" /> <br />
+    <label>passWord</label><input type="password" name="passWord" /> <br />
+    <input type="button" value="用户名and 密码"
+           onClick="send1(this.form.userName.value+':'+this.form.passWord.value)" />
+
+
+    <hr color="black" />
+    <h3>服务端返回的应答消息</h3>
+    <textarea id="responseText" style="width: 1024px;height: 300px;"></textarea>
+</form>
+</body>
+</html>
