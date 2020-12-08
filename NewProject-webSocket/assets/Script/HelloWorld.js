@@ -20,7 +20,8 @@ cc.Class({
 
 	start () {
 	
-        websocket.connect("ws://127.0.0.1:12345/ws?uid=666^&amp=777");
+       // websocket.connect("ws://127.0.0.1:8080/ws?uid=666^&amp=777");
+        websocket.connect("ws://127.0.0.1:8080/ws/asset");
     },
     // called every frame
     update: function (dt) {
