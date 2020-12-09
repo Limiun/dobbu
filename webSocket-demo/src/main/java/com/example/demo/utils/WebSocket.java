@@ -2,6 +2,8 @@ package com.example.demo.utils;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.OnClose;
@@ -31,6 +33,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 @ServerEndpoint("/websocket/{name}")
 public class WebSocket {
+    private static final Logger log =  LoggerFactory.getLogger(WebSocket.class);
+
 
     /**
      *  与某个客户端的连接对话，需要通过它来给客户端发送消息
@@ -55,8 +59,7 @@ public class WebSocket {
         // name是用来表示唯一客户端，如果需要指定发送，需要指定发送通过name来区分
         webSocketSet.put(name,this);
         log.info("[WebSocket] 连接成功，当前连接人数为：={}",webSocketSet.size());
-
-    }
+ }
 
 
     @OnClose

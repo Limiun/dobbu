@@ -15,7 +15,8 @@ var websocket = {
     
     on_message: function (event) {
 		cc.log("First client rcv data=" + event.data);
-		let udata = new Unit8Array(event.data)
+		//let udata = new Unit8Array(event.data)
+		let udata = new Uint8Array(event.data)
 		cc.log(udata);
 		let messagefor = msg.Login.decode(udata);
         console.log("client rcv data=" + messagefor);

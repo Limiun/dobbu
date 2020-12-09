@@ -2,7 +2,7 @@ package com.example.demo.utils;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.demo.msgInfo;
+import com.example.demo.game.msg.msgInfo;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -11,8 +11,6 @@ import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 
-import java.io.ByteArrayInputStream;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,7 +73,7 @@ public class MyWebSocketHandler extends SimpleChannelInboundHandler<TextWebSocke
             msgInfo.Login userInfo1 = msgInfo.Login.parseFrom(barray);
             System.out.println(userInfo1);
             buf.retain();
-            sendAllMessageTwo(buf);
+            sendAllMessageByteBuf(buf);
         }
         super.channelRead(ctx, msg);
     }
@@ -121,9 +119,8 @@ public class MyWebSocketHandler extends SimpleChannelInboundHandler<TextWebSocke
         //收到信息后，群发给所有channel
         MyChannelHandlerPool.channelGroup.writeAndFlush( new TextWebSocketFrame(message));
     }
-    private void sendAllMessageTwo(ByteBuf message){
+    private void sendAllMessageByteBuf(ByteBuf message){
         //收到信息后，群发给所有channel
-
         MyChannelHandlerPool.channelGroup.writeAndFlush(new BinaryWebSocketFrame(message));
     }
 
