@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package msg;
+
+option java_package = "com.example.demo";
+option java_outer_classname = "msgInfo";
+message Login {
+    string name = 1;
+    string pwd = 2;
+}

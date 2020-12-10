@@ -1,0 +1,14 @@
+在目录下新建一个proto文件，参考msg.proto,（里面的package为包名msg）
+使用如下命令将msg.proto文件转为对应的js版本文件Msg.js
+::protobuf.js版本6.x生成js文件
+pbjs -t static-module -w commonjs -o Msg.js msg.proto 
+
+修改Msg.js文件对应内容
+//var $protobuf = require("protobufjs/minimal"); //将源文件中的这一行屏蔽，然后新增下面一行
+var $protobuf = protobuf;
+
+将Msg.js拖放到Creator中
+
+写一个WebSocket的处理脚本挂载到场景中即可。
+
+import {msg} from "./Msg"  //这里引入文件,msg为package的包名
