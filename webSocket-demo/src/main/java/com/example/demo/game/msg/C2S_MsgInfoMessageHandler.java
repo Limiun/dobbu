@@ -12,9 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Component;
 
-@Component
-// 代表可以被多个channel线程安全共享
-@ChannelHandler.Sharable
+//@Component
+//// 代表可以被多个channel线程安全共享
+//@ChannelHandler.Sharable
 @Log4j2
 public class C2S_MsgInfoMessageHandler extends SimpleChannelInboundHandler<msgInfo.Login> {
     @Autowired

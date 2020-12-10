@@ -72,7 +72,7 @@ public class NettyServer {
                             ch.pipeline().addLast(new ChunkedWriteHandler());
                             // 支持参数对象解析， 比如POST参数， 设置聚合内容的最大长度
                             ch.pipeline().addLast(new HttpObjectAggregator(65536));
-//                            ch.pipeline().addLast(new MyWebSocketHandler());
+                            ch.pipeline().addLast(new MyWebSocketHandler());
 
 //                            ch.pipeline().addLast(new WebSocketServerProtocolHandler("/ws", "WebSocket", true, 65536 * 10));
                             ch.pipeline().addLast(new WebSocketServerProtocolHandler("/ws", null, true));

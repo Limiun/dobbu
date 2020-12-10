@@ -47,6 +47,7 @@ var websocket = {
     },
  
     send_data: function (data) {
+		cc.log(data);
 		let messagetest = msg.Login.create({name: "hello", pwd: "pwd"});//构造对象
 		let messageBuftest = msg.Login.encode(messagetest).finish(); //获取二进制数据，一定要注意使用finish函数
 		cc.log("%%%%%%%%%%%%%%%%%%%%%");
@@ -58,8 +59,10 @@ var websocket = {
 		cc.log("sendByte"+sendByte);
 		let user_login = msg.Login.decode(sendByte);
 		cc.log(user_login);
-		cc.log("%%%%%%%%%%%%%%%%%%%%%");
+		cc.log("%%%%%%%%%%%%发送消息%%%%%%%%%");
+		//this.sock.send(messageBuftest);
 		this.sock.send(messageBuftest);
+		cc.log("%%%%%%%%%%%%结束消息%%%%%%%%%");
 		cc.log(messageBuftest);
 		cc.log(messagetest);
 		let messagefor = msg.Login.decode(messageBuftest);
