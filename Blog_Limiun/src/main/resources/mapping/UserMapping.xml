@@ -2,29 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.UserMapper">
     <resultMap id="BaseResultMap" type="com.example.demo.bean.User">
-        <result column="id" jdbcType="INTEGER" property="id" />
-        <result column="userName" jdbcType="VARCHAR" property="userName" />
-        <result column="passWord" jdbcType="VARCHAR" property="passWord" />
+        <result column="id" jdbcType="BIGINT" property="id" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="account" jdbcType="VARCHAR" property="account" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
         <result column="sex" jdbcType="INTEGER" property="sex" />
+        <result column="age" jdbcType="INTEGER" property="age" />
+        <result column="phone" jdbcType="INTEGER" property="phone" />
+        <result column="account_state" jdbcType="INTEGER" property="account_state" />
+        <result column="special_sign" jdbcType="VARCHAR" property="special_sign" />
+        <result column="money" jdbcType="BIGINT" property="money" />
+        <result column="extendMap" jdbcType="VARCHAR" property="extendMap" />
     </resultMap>
 
-    <select id="Sel" resultType="com.example.demo.bean.User">
+    <select id="SelectUser" resultType="com.example.demo.bean.User">
         select * from user where id = #{id}
     </select>
 
-    <select id="GetUserNameAndPassWordAndSex" resultType="com.example.demo.bean.User">
-        SELECT userName ,passWord,sex from user where id = #{id}
+    <select id="GetUserByAccount" resultType="com.example.demo.bean.User">
+        SELECT * from user where account = #{account}
     </select>
 
-    <select id="GetPassWordByUserName" resultType="com.example.demo.bean.User">
-        SELECT passWord from user where userName  = #{userName}
-    </select>
+<!--    <select id="GetPassWordByUserName" resultType="com.example.demo.bean.User">-->
+<!--        SELECT passWord from user where userName  = #{userName}-->
+<!--    </select>-->
 
-    <select id="GetUserByUserName" resultType="com.example.demo.bean.User">
-        SELECT * from user where userName  = #{userName}
-    </select>
+<!--    <select id="GetUserByUserName" resultType="com.example.demo.bean.User">-->
+<!--        SELECT * from user where userName  = #{userName}-->
+<!--    </select>-->
     <insert id="InsertUser" parameterType="com.example.demo.bean.User" keyProperty="id">
-        insert  into User(userName,passWord,Sex,extendMap) values (#{userName},#{passWord},#{sex},#{extendMap})
+        insert  into User(id,username,account,password,sex,age,phone,account_state,special_sign,money,extendMap) values
+        (#{id},#{username},#{account},#{password},#{sex},#{age},#{phone},#{account_state},#{special_sign},#{money},#{extendMap})
     </insert>
 
 
