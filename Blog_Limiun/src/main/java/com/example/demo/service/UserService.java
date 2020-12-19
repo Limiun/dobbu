@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 
 public interface UserService {
-    public User getUserById(long id);
+    public User getUserById(int id);
     public User getUserByAccount(String account);
     public boolean insertUser(User user);
 }

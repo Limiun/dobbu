@@ -12,7 +12,7 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
 
     @Override
-    public User getUserById(long id) {
+    public User getUserById(int id) {
         return userMapper.SelectUser(id);
     }
 
@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean insertUser(User user) {
-        long id = user.getId();
+        int id = user.getId();
         String username = user.getUsername();
         String account = user.getAccount();
         String password = user.getPassword();

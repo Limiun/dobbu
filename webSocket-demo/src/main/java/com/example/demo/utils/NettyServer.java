@@ -1,6 +1,8 @@
 package com.example.demo.utils;
 
 
+import com.example.demo.game.UserInfo.C2S_UserInfoMessageHandler;
+import com.example.demo.game.UserInfo.UserInfo;
 import com.example.demo.game.button.ButtonInfo;
 import com.example.demo.game.button.C2S_ButtonTestMessageHandler;
 import com.example.demo.game.msg.C2S_MsgInfoMessageHandler;
@@ -50,6 +52,8 @@ public class NettyServer {
     private C2S_ButtonTestMessageHandler c2s_buttonTestMessageHandler;
     @Autowired
     private C2S_MsgInfoMessageHandler c2s_msgInfoMessageHandler;
+    @Autowired
+    private C2S_UserInfoMessageHandler c2s_userInfoMessageHandler;
 
 
     public NettyServer(int port) {
@@ -73,8 +77,6 @@ public class NettyServer {
                             System.out.println("收到新连接");
                             //websocket协议本身是基于http协议的，所以这边也要使用http解编码器
                             ch.pipeline().addLast(new HttpServerCodec());
-
-
                             //以块的方式来写的处理器  支持大数据流写入
                             ch.pipeline().addLast(new ChunkedWriteHandler());
                             // 支持参数对象解析， 比如POST参数， 设置聚合内容的最大长度
@@ -135,14 +137,18 @@ public class NettyServer {
                                     out.add(frame);
                                 }
                             });
+
                             // Protobuf消息解码器
                             ch.pipeline().addLast(new ProtobufDecoder(ButtonInfo.UserMsg.getDefaultInstance()));
-                            // 自定义数据处理器
-                            ch.pipeline().addLast(c2s_buttonTestMessageHandler);
                             // Protobuf消息解码器
                             ch.pipeline().addLast(new ProtobufDecoder(msgInfo.Login.getDefaultInstance()));
+                            ch.pipeline().addLast(new ProtobufDecoder(UserInfo.UserMsg.getDefaultInstance()));
+
+                            // 自定义数据处理器
+                            ch.pipeline().addLast(c2s_buttonTestMessageHandler);
                             // 自定义数据处理器
                             ch.pipeline().addLast(c2s_msgInfoMessageHandler);
+                            ch.pipeline().addLast("C2S_UserInfoMessageHandler",c2s_userInfoMessageHandler);
                         }
                     });
 

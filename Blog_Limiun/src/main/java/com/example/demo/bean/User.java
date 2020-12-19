@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 @Data
 public class User {
-    private long id; //id
+    private int id; //id
     private String username;//用户名
     private String account;//账号
     private String password;
@@ -18,4 +18,4 @@ public class User {
     private long money;//
     private String extendMap;//扩展的String
 
-}
+}y

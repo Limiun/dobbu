@@ -148,12 +148,12 @@ message TestAllTypesLite {
 
   optional NestedEnum default_nested_enum = 81 [default = BAR];
   optional ForeignEnumLite default_foreign_enum = 82
-      [default = FOREIGN_LITE_BAR];
+  [default = FOREIGN_LITE_BAR];
   optional protobuf_unittest_import.ImportEnumLite default_import_enum = 83
-      [default = IMPORT_LITE_BAR];
+  [default = IMPORT_LITE_BAR];
 
   optional string default_string_piece = 84
-      [ctype = STRING_PIECE, default = "abc"];
+  [ctype = STRING_PIECE, default = "abc"];
   optional string default_cord = 85 [ctype = CORD, default = "123"];
 
   // For oneof test
@@ -234,7 +234,7 @@ extend TestAllExtensionsLite {
       optional_import_enum_extension_lite = 23;
 
   optional string optional_string_piece_extension_lite = 24
-      [ctype = STRING_PIECE];
+  [ctype = STRING_PIECE];
   optional string optional_cord_extension_lite = 25 [ctype = CORD];
 
   optional protobuf_unittest_import.PublicImportMessageLite
@@ -276,7 +276,7 @@ extend TestAllExtensionsLite {
       repeated_import_enum_extension_lite = 53;
 
   repeated string repeated_string_piece_extension_lite = 54
-      [ctype = STRING_PIECE];
+  [ctype = STRING_PIECE];
   repeated string repeated_cord_extension_lite = 55 [ctype = CORD];
 
   repeated TestAllTypesLite.NestedMessage repeated_lazy_message_extension_lite =
@@ -300,16 +300,16 @@ extend TestAllExtensionsLite {
   optional bytes default_bytes_extension_lite = 75 [default = "world"];
 
   optional TestAllTypesLite.NestedEnum default_nested_enum_extension_lite = 81
-      [default = BAR];
+  [default = BAR];
   optional ForeignEnumLite default_foreign_enum_extension_lite = 82
-      [default = FOREIGN_LITE_BAR];
+  [default = FOREIGN_LITE_BAR];
   optional protobuf_unittest_import.ImportEnumLite
       default_import_enum_extension_lite = 83 [default = IMPORT_LITE_BAR];
 
   optional string default_string_piece_extension_lite = 84
-      [ctype = STRING_PIECE, default = "abc"];
+  [ctype = STRING_PIECE, default = "abc"];
   optional string default_cord_extension_lite = 85
-      [ctype = CORD, default = "123"];
+  [ctype = CORD, default = "123"];
 
   // For oneof test
   optional uint32 oneof_uint32_extension_lite = 111;
@@ -395,7 +395,7 @@ message TestEmptyMessageWithExtensionsLite {
   extensions 1 to max;
 }
 
-enum V1EnumLite { V1_FIRST = 1; }
+enum V1EnumLite {V1_FIRST = 1;}
 
 enum V2EnumLite {
   V2_FIRST = 1;
@@ -453,7 +453,7 @@ message TestOneofParsingLite {
     bytes oneof_bytes_cord = 6 [ctype = CORD];
     string oneof_string_string_piece = 7 [ctype = STRING_PIECE];
     bytes oneof_bytes_string_piece = 8
-        [ctype = STRING_PIECE, default = "default StringPiece"];
+    [ctype = STRING_PIECE, default = "default StringPiece"];
     V2EnumLite oneof_enum = 9;
   }
 }

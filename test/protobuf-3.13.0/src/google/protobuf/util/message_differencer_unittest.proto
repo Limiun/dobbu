@@ -62,7 +62,7 @@ message TestDiffMessage {
     repeated string rb = 5;     // Test TreatAsMap when key is repeated
     optional TestField m = 6;   // Test TreatAsMap when key is a message
     repeated TestField rm = 7;  // Test TreatAsMap when key is a repeated
-                                // message
+    // message
   }
 
   optional int32 v = 13 [deprecated = true];

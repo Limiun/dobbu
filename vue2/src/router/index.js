@@ -4,7 +4,6 @@ import router from '../router'
 import Login from "../components/Before_login/Login";
 import HelloWorld from "../components/HelloWorld";
 import video from "../components/Test/video"
-import Regist from "../components/Before_login/Regist"
 Vue.use(Router)
 
 export default new Router({
@@ -25,11 +24,11 @@ export default new Router({
       name:video,
       component:video
     },
-    {
-      path:'/Regist',
-      name:Regist,
-      component:Regist
-    }
+    // {
+    //   path:'/Regist',
+    //   name:Regist,
+    //   component:Regist
+    // }
 
   ],
 })

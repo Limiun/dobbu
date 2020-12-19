@@ -19,12 +19,10 @@ public class C2S_ButtonTestMessageHandler  extends SimpleChannelInboundHandler<B
 
     @Autowired
     private TaskExecutor taskExecutor;
-
     /**
      * 负责客户端Channel管理(线程安全)
      */
     public static ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
-
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, ButtonInfo.UserMsg userMsg) throws Exception {
         System.out.println("testbuttom");

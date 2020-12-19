@@ -2,14 +2,14 @@
   <div id="box" style="margin-top: 140px">
     <div style="justify-content: center;display: flex;">
       <el-card>
-        <el-form id="form" style="width: 400px;" :ref="user1" :model="user1":rules="rules"  >
+        <el-form id="form" style="width: 400px;" :ref="user" :model="user":rules="rules"  >
           <h2>用户登录</h2>
           <div class="verticalBar"></div>
           <el-form-item label="用户名" prop="userName" style="margin-top: 20px">
-            <el-input type="account"  v-model="user1.account" placeholder="请输入用户名" autocomplete="off"></el-input>
+            <el-input type="account"  v-model="user.account" placeholder="请输入用户名" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="passWord">
-            <el-input type="password"  v-model="user1.password" placeholder="请输入密码" autocomplete="off"></el-input>
+            <el-input type="password"  v-model="user.password" placeholder="请输入密码" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button id="commit" type="primary" v-on:click="commit">登录</el-button>
@@ -28,7 +28,7 @@
   export default {
         data(){
           return{
-            user1:{
+            user:{
               account:'',
               password:'',
             },
@@ -47,11 +47,11 @@
         },
       methods:{
         commit(){
-          var loginMessage = this.user1;
+          var loginMessage = this.user;
           if(loginMessage.account === ''|| loginMessage.password === ''){
             alert('账号或密码不能为空')
           }else{
-            alert(JSON.stringify(this.user1))
+            alert(JSON.stringify(this.user))
             this.$axios.post(('http://localhost:8025/user/login'),loginMessage,{
                    }).then(res=>{
               console.log("请求发送了"+res.data)
@@ -61,8 +61,9 @@
           }
         },
         regist(){
-            alert("准备跳转至注册页面")
-        }
+            // alert("准备跳转至注册页面");
+            this.$router.push("/video").catch(()=>{})
+        },
       }
     }
 </script>

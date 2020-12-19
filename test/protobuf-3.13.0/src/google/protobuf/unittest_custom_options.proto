@@ -362,12 +362,12 @@ option (fileopt) = {
   /* of both types */
   i: 100
 
-  sub { s: 'NestedFileAnnotation' }
+  sub {s: 'NestedFileAnnotation'}
 
   // Include a google.protobuf.FileOptions and recursively extend it with
   // another fileopt.
   file {
-    [protobuf_unittest.fileopt] { s: 'FileExtensionAnnotation' }
+    [protobuf_unittest.fileopt] {s: 'FileExtensionAnnotation'}
   }
 
   // A message set inside an option value
@@ -384,7 +384,7 @@ message AggregateMessage {
     s: 'MessageAnnotation'
   };
 
-  optional int32 fieldname = 1 [(fieldopt) = { s: 'FieldAnnotation' }];
+  optional int32 fieldname = 1 [(fieldopt) = {s: 'FieldAnnotation'}];
 }
 
 service AggregateService {
@@ -404,7 +404,7 @@ enum AggregateEnum {
     s: 'EnumAnnotation'
   };
 
-  VALUE = 1 [(enumvalopt) = { s: 'EnumValueAnnotation' }];
+  VALUE = 1 [(enumvalopt) = {s: 'EnumValueAnnotation'}];
 }
 
 // Test custom options for nested type.
@@ -427,7 +427,7 @@ message NestedOptionType {
 // Custom message option that has a required enum field.
 // WARNING: this is strongly discouraged!
 message OldOptionType {
-  enum TestEnum { OLD_VALUE = 0; }
+  enum TestEnum {OLD_VALUE = 0;}
   required TestEnum value = 1;
 }
 

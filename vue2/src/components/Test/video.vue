@@ -8,12 +8,12 @@
 <!--        <source src="PATH_TO_WEBM" type="video/webm"/>-->
 <!--        浏览器不支持 video 标签，建议升级浏览器。-->
       </video>
-      <div style="z-index: 1 ;position: fixed">
-        <h1 >test</h1>
-      </div>
-      <div style="z-index: 3 ;position: fixed">
-        <h1 >test</h1>
-      </div>
+<!--      <div style="z-index: 1 ;position: fixed">-->
+<!--        <h1 >test</h1>-->
+<!--      </div>-->
+<!--      <div style="z-index: 3 ;position: fixed">-->
+<!--        <h1 >test</h1>-->
+<!--      </div>-->
 
 
 <!--      <div class="poster hidden" v-if="!vedioCanPlay">-->

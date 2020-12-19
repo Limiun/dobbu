@@ -39,15 +39,15 @@ import "google/protobuf/unittest_import.proto";
 package protobuf_unittest;
 
 enum Proto2MapEnum {
-  PROTO2_MAP_ENUM_FOO   = 0;
-  PROTO2_MAP_ENUM_BAR   = 1;
-  PROTO2_MAP_ENUM_BAZ   = 2;
+  PROTO2_MAP_ENUM_FOO = 0;
+  PROTO2_MAP_ENUM_BAR = 1;
+  PROTO2_MAP_ENUM_BAZ = 2;
 }
 
 enum Proto2MapEnumPlusExtra {
-  E_PROTO2_MAP_ENUM_FOO   = 0;
-  E_PROTO2_MAP_ENUM_BAR   = 1;
-  E_PROTO2_MAP_ENUM_BAZ   = 2;
+  E_PROTO2_MAP_ENUM_FOO = 0;
+  E_PROTO2_MAP_ENUM_BAR = 1;
+  E_PROTO2_MAP_ENUM_BAZ = 2;
   E_PROTO2_MAP_ENUM_EXTRA = 3;
 }
 
