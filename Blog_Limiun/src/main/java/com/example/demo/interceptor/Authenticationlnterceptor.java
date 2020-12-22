@@ -30,6 +30,7 @@ public class Authenticationlnterceptor implements AsyncHandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         boolean checkUser = false;
         boolean checkAnnotation = true;
+        System.out.println(request.getRequestURI());
         String token = request.getHeader("token");
         logger.info("这里取到token："+token);
 

@@ -9,6 +9,7 @@ import sun.plugin2.util.SystemUtil;
 import java.util.Date;
 
 public class Token {
+    private final static String SPECIAL = "Limiun";
     public static String getToken(User user){
         Date start = new Date();
         long currentTime = System.currentTimeMillis() + 60* 60 * 1000;//一小时有效时间

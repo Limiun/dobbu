@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 public interface UserMapper {
     User SelectUser(int id);
     User GetUserByAccount(String account);
-    int InsertUser(int id,String username,String account,String password,int sex ,int age,int phone,int account_state,String special_sign,long money,String extendMap);
+    int InsertUser(int id,String username,String account,String password,int sex ,int age,long phone,int account_state,String special_sign,long money,String extendMap);
 }

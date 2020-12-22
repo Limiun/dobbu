@@ -12,10 +12,9 @@ public class User {
     private String password;
     private int sex;//性别
     private int age;//年龄
-    private int phone;
+    private long phone;
     private int account_state;//账号状态
     private String special_sign;//特殊码（用于邀请人家的标识）
     private long money;//
     private String extendMap;//扩展的String
-
-}y
+}
