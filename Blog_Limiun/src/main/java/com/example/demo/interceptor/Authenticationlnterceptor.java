@@ -10,8 +10,10 @@ import com.example.demo.annotation.PassToken;
 import com.example.demo.annotation.UserLoginToken;
 import com.example.demo.bean.User;
 import com.example.demo.service.UserService;
+import com.example.demo.utils.RedisUtil;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,6 +26,8 @@ import java.lang.reflect.Method;
 public class Authenticationlnterceptor implements AsyncHandlerInterceptor {
     private static final org.slf4j.Logger logger =  LoggerFactory.getLogger(Authenticationlnterceptor.class);
 
+    @Autowired
+    private RedisUtil redisUtil = null;
     @Autowired
     UserService userService;
     @Override
@@ -95,5 +99,18 @@ public class Authenticationlnterceptor implements AsyncHandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
 
+    }
+
+    public String getToken(String key){
+        Object v = redisUtil.get(key);
+        if (StringUtils.isEmpty(v)){// 第一重验证
+            synchronized (this){
+                v = redisUtil.get(key);
+                if (StringUtils.isEmpty(key)){
+                    return null;
+                }
+            }
+        }
+        return String.valueOf(v);
     }
 }
