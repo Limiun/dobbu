@@ -1,0 +1,8 @@
+{
+  "engine": "cocos2d-html5",
+  "packages": "packages",
+  "version": "2.4.3",
+  "name": "Test_Protobuf",
+  "id": "b4db313d-843d-4851-830a-de0dc8b18e2a",
+  "isNew": false
+}
