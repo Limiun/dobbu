@@ -1,0 +1,20 @@
+syntax = "proto3";
+// 生成的包名
+option java_package="com.example.demo";
+//生成的java名
+option java_outer_classname = "UserInfo1";
+
+message UserMsg1 {  
+      
+     // ID  
+     int32 id1 = 1;  
+      
+    // 姓名  
+     string name1 = 2;  
+      
+    // 年龄  
+      int32 age1 = 3;  
+	  
+	 // 状态 
+     int32 state1 = 4;  
+} 
