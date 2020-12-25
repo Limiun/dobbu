@@ -40,9 +40,9 @@ axios.interceptors.request.use(config=>{
 //响应回来token是否过期
 axios.interceptors.response.use(response => {
     console.log('响应回来：'+response.data.code)
-    console.log('响应回来：'+response.data)
+    console.log('响应回来：'+response.data.token)
     //和后端token失效返回码约定403
-    if (response.data.code == 403) {
+    if (response.data.code != 1) {
       // 引用elementui message提示框
       ElementUI.Message({
         message: '身份已失效',
@@ -55,7 +55,7 @@ axios.interceptors.response.use(response => {
       this.$router.push("/Login").catch(()=>{})
       // router.push({name: 'Login'});
     } else {
-      localStorage.setItem('token',response.data)
+      localStorage.setItem('token',response.data.token)
       return response
     }
   },

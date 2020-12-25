@@ -9,27 +9,27 @@ var $Reader = $protobuf.Reader, $Writer = $protobuf.Writer, $util = $protobuf.ut
 // Exported root namespace
 var $root = $protobuf.roots["default"] || ($protobuf.roots["default"] = {});
 
-$root.UserMsg = (function() {
+$root.test1Msg = (function() {
 
     /**
-     * Properties of a UserMsg.
-     * @exports IUserMsg
-     * @interface IUserMsg
-     * @property {number|null} [id] UserMsg id
-     * @property {string|null} [name] UserMsg name
-     * @property {number|null} [age] UserMsg age
-     * @property {number|null} [state] UserMsg state
+     * Properties of a test1Msg.
+     * @exports Itest1Msg
+     * @interface Itest1Msg
+     * @property {number|null} [id] test1Msg id
+     * @property {string|null} [name] test1Msg name
+     * @property {number|null} [age] test1Msg age
+     * @property {number|null} [state] test1Msg state
      */
 
     /**
-     * Constructs a new UserMsg.
-     * @exports UserMsg
-     * @classdesc Represents a UserMsg.
-     * @implements IUserMsg
+     * Constructs a new test1Msg.
+     * @exports test1Msg
+     * @classdesc Represents a test1Msg.
+     * @implements Itest1Msg
      * @constructor
-     * @param {IUserMsg=} [properties] Properties to set
+     * @param {Itest1Msg=} [properties] Properties to set
      */
-    function UserMsg(properties) {
+    function test1Msg(properties) {
         if (properties)
             for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                 if (properties[keys[i]] != null)
@@ -37,59 +37,59 @@ $root.UserMsg = (function() {
     }
 
     /**
-     * UserMsg id.
+     * test1Msg id.
      * @member {number} id
-     * @memberof UserMsg
+     * @memberof test1Msg
      * @instance
      */
-    UserMsg.prototype.id = 0;
+    test1Msg.prototype.id = 0;
 
     /**
-     * UserMsg name.
+     * test1Msg name.
      * @member {string} name
-     * @memberof UserMsg
+     * @memberof test1Msg
      * @instance
      */
-    UserMsg.prototype.name = "";
+    test1Msg.prototype.name = "";
 
     /**
-     * UserMsg age.
+     * test1Msg age.
      * @member {number} age
-     * @memberof UserMsg
+     * @memberof test1Msg
      * @instance
      */
-    UserMsg.prototype.age = 0;
+    test1Msg.prototype.age = 0;
 
     /**
-     * UserMsg state.
+     * test1Msg state.
      * @member {number} state
-     * @memberof UserMsg
+     * @memberof test1Msg
      * @instance
      */
-    UserMsg.prototype.state = 0;
+    test1Msg.prototype.state = 0;
 
     /**
-     * Creates a new UserMsg instance using the specified properties.
+     * Creates a new test1Msg instance using the specified properties.
      * @function create
-     * @memberof UserMsg
+     * @memberof test1Msg
      * @static
-     * @param {IUserMsg=} [properties] Properties to set
-     * @returns {UserMsg} UserMsg instance
+     * @param {Itest1Msg=} [properties] Properties to set
+     * @returns {test1Msg} test1Msg instance
      */
-    UserMsg.create = function create(properties) {
-        return new UserMsg(properties);
+    test1Msg.create = function create(properties) {
+        return new test1Msg(properties);
     };
 
     /**
-     * Encodes the specified UserMsg message. Does not implicitly {@link UserMsg.verify|verify} messages.
+     * Encodes the specified test1Msg message. Does not implicitly {@link test1Msg.verify|verify} messages.
      * @function encode
-     * @memberof UserMsg
+     * @memberof test1Msg
      * @static
-     * @param {IUserMsg} message UserMsg message or plain object to encode
+     * @param {Itest1Msg} message test1Msg message or plain object to encode
      * @param {$protobuf.Writer} [writer] Writer to encode to
      * @returns {$protobuf.Writer} Writer
      */
-    UserMsg.encode = function encode(message, writer) {
+    test1Msg.encode = function encode(message, writer) {
         if (!writer)
             writer = $Writer.create();
         if (message.id != null && message.hasOwnProperty("id"))
@@ -104,33 +104,33 @@ $root.UserMsg = (function() {
     };
 
     /**
-     * Encodes the specified UserMsg message, length delimited. Does not implicitly {@link UserMsg.verify|verify} messages.
+     * Encodes the specified test1Msg message, length delimited. Does not implicitly {@link test1Msg.verify|verify} messages.
      * @function encodeDelimited
-     * @memberof UserMsg
+     * @memberof test1Msg
      * @static
-     * @param {IUserMsg} message UserMsg message or plain object to encode
+     * @param {Itest1Msg} message test1Msg message or plain object to encode
      * @param {$protobuf.Writer} [writer] Writer to encode to
      * @returns {$protobuf.Writer} Writer
      */
-    UserMsg.encodeDelimited = function encodeDelimited(message, writer) {
+    test1Msg.encodeDelimited = function encodeDelimited(message, writer) {
         return this.encode(message, writer).ldelim();
     };
 
     /**
-     * Decodes a UserMsg message from the specified reader or buffer.
+     * Decodes a test1Msg message from the specified reader or buffer.
      * @function decode
-     * @memberof UserMsg
+     * @memberof test1Msg
      * @static
      * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
      * @param {number} [length] Message length if known beforehand
-     * @returns {UserMsg} UserMsg
+     * @returns {test1Msg} test1Msg
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    UserMsg.decode = function decode(reader, length) {
+    test1Msg.decode = function decode(reader, length) {
         if (!(reader instanceof $Reader))
             reader = $Reader.create(reader);
-        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.UserMsg();
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.test1Msg();
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
@@ -155,30 +155,30 @@ $root.UserMsg = (function() {
     };
 
     /**
-     * Decodes a UserMsg message from the specified reader or buffer, length delimited.
+     * Decodes a test1Msg message from the specified reader or buffer, length delimited.
      * @function decodeDelimited
-     * @memberof UserMsg
+     * @memberof test1Msg
      * @static
      * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-     * @returns {UserMsg} UserMsg
+     * @returns {test1Msg} test1Msg
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    UserMsg.decodeDelimited = function decodeDelimited(reader) {
+    test1Msg.decodeDelimited = function decodeDelimited(reader) {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
     };
 
     /**
-     * Verifies a UserMsg message.
+     * Verifies a test1Msg message.
      * @function verify
-     * @memberof UserMsg
+     * @memberof test1Msg
      * @static
      * @param {Object.<string,*>} message Plain object to verify
      * @returns {string|null} `null` if valid, otherwise the reason why it is not
      */
-    UserMsg.verify = function verify(message) {
+    test1Msg.verify = function verify(message) {
         if (typeof message !== "object" || message === null)
             return "object expected";
         if (message.id != null && message.hasOwnProperty("id"))
@@ -197,17 +197,17 @@ $root.UserMsg = (function() {
     };
 
     /**
-     * Creates a UserMsg message from a plain object. Also converts values to their respective internal types.
+     * Creates a test1Msg message from a plain object. Also converts values to their respective internal types.
      * @function fromObject
-     * @memberof UserMsg
+     * @memberof test1Msg
      * @static
      * @param {Object.<string,*>} object Plain object
-     * @returns {UserMsg} UserMsg
+     * @returns {test1Msg} test1Msg
      */
-    UserMsg.fromObject = function fromObject(object) {
-        if (object instanceof $root.UserMsg)
+    test1Msg.fromObject = function fromObject(object) {
+        if (object instanceof $root.test1Msg)
             return object;
-        var message = new $root.UserMsg();
+        var message = new $root.test1Msg();
         if (object.id != null)
             message.id = object.id | 0;
         if (object.name != null)
@@ -220,15 +220,15 @@ $root.UserMsg = (function() {
     };
 
     /**
-     * Creates a plain object from a UserMsg message. Also converts values to other types if specified.
+     * Creates a plain object from a test1Msg message. Also converts values to other types if specified.
      * @function toObject
-     * @memberof UserMsg
+     * @memberof test1Msg
      * @static
-     * @param {UserMsg} message UserMsg
+     * @param {test1Msg} message test1Msg
      * @param {$protobuf.IConversionOptions} [options] Conversion options
      * @returns {Object.<string,*>} Plain object
      */
-    UserMsg.toObject = function toObject(message, options) {
+    test1Msg.toObject = function toObject(message, options) {
         if (!options)
             options = {};
         var object = {};
@@ -250,17 +250,17 @@ $root.UserMsg = (function() {
     };
 
     /**
-     * Converts this UserMsg to JSON.
+     * Converts this test1Msg to JSON.
      * @function toJSON
-     * @memberof UserMsg
+     * @memberof test1Msg
      * @instance
      * @returns {Object.<string,*>} JSON object
      */
-    UserMsg.prototype.toJSON = function toJSON() {
+    test1Msg.prototype.toJSON = function toJSON() {
         return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
-    return UserMsg;
+    return test1Msg;
 })();
 
 module.exports = $root;

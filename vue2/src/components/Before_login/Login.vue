@@ -37,7 +37,7 @@
               account:[{required:true,message:'账户不能为空',trigger:'blur'},
                 {validator:validatePhone, trigger:'blur'}
               ],
-              passWord:[{
+              password:[{
                 required:true,message:'密码不能为空',trigger:'blur'
               },
                 {min: 6, max: 20, message: '密码长度6-20字符', trigger: 'blur'}
@@ -56,13 +56,13 @@
                    }).then(res=>{
               console.log("请求发送了"+res.data)
               console.log("登陆前:"+localStorage.getItem('token'))
-              this.$router.push("/").catch(()=>{})
+              this.$router.push("/mainView").catch(()=>{})
             })
           }
         },
         regist(){
             // alert("准备跳转至注册页面");
-            this.$router.push("/video").catch(()=>{})
+            this.$router.push("/RegistUser").catch(()=>{})
         },
       }
     }

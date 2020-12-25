@@ -7,6 +7,8 @@ import com.example.demo.game.button.ButtonInfo;
 import com.example.demo.game.button.C2S_ButtonTestMessageHandler;
 import com.example.demo.game.msg.C2S_MsgInfoMessageHandler;
 import com.example.demo.game.msg.msgInfo;
+import com.example.demo.game.role_test1.C2S_RoleTest1MessageHandler;
+import com.example.demo.game.role_test1.Test1;
 import com.google.protobuf.MessageLite;
 import com.google.protobuf.MessageLiteOrBuilder;
 import io.netty.bootstrap.ServerBootstrap;
@@ -27,7 +29,9 @@ import io.netty.handler.stream.ChunkedWriteHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 import static io.netty.buffer.Unpooled.wrappedBuffer;
@@ -43,18 +47,23 @@ import static io.netty.buffer.Unpooled.wrappedBuffer;
  * @author zhengkai.blog.csdn.net
  * @date 2019-06-12
  */
+
 public class NettyServer {
 
     private static final Logger log = LoggerFactory.getLogger(NettyServer.class);
     private final int port;
 
-    @Autowired
-    private C2S_ButtonTestMessageHandler c2s_buttonTestMessageHandler;
-    @Autowired
-    private C2S_MsgInfoMessageHandler c2s_msgInfoMessageHandler;
-    @Autowired
-    private C2S_UserInfoMessageHandler c2s_userInfoMessageHandler;
+//    @Autowired
+//    private C2S_ButtonTestMessageHandler c2s_buttonTestMessageHandler;
+////    @Autowired
+////    private C2S_MsgInfoMessageHandler c2s_msgInfoMessageHandler;
+//    @Autowired
+//    private C2S_UserInfoMessageHandler c2s_userInfoMessageHandler;
 
+//    @PostConstruct
+//    public void init(){
+//        c2s_msgInfoMessageHandler = new C2S_MsgInfoMessageHandler();
+//    }
 
     public NettyServer(int port) {
         this.port = port;
@@ -143,15 +152,15 @@ public class NettyServer {
                             // Protobuf消息解码器
                             ch.pipeline().addLast(new ProtobufDecoder(msgInfo.Login.getDefaultInstance()));
                             ch.pipeline().addLast(new ProtobufDecoder(UserInfo.UserMsg.getDefaultInstance()));
-
+                            ch.pipeline().addLast(new ProtobufDecoder(Test1.test1Msg.getDefaultInstance()));
                             // 自定义数据处理器
-                            ch.pipeline().addLast(c2s_buttonTestMessageHandler);
+                            ch.pipeline().addLast(new C2S_ButtonTestMessageHandler());
                             // 自定义数据处理器
-                            ch.pipeline().addLast(c2s_msgInfoMessageHandler);
-                            ch.pipeline().addLast("C2S_UserInfoMessageHandler",c2s_userInfoMessageHandler);
+                            ch.pipeline().addLast(new C2S_MsgInfoMessageHandler());
+                            ch.pipeline().addLast(new C2S_UserInfoMessageHandler());
+                            ch.pipeline().addLast(new C2S_RoleTest1MessageHandler());
                         }
                     });
-
 
             ChannelFuture cf = sb.bind().sync(); // 服务器异步创建绑定
             System.out.println(NettyServer.class + " 启动正在监听： " + cf.channel().localAddress());

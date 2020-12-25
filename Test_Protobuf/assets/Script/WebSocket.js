@@ -1,29 +1,26 @@
 var websocket = {
-	sock:null;
+	sock:null
 	on_open function(){
-		let usermeg = 
-		this.send_data();
-		
 	}
-	on_message: function (event) {
+	on_message: function(event) {
         console.log("client rcv data=" + event.data);
     },
- 
-    on_close: function () {
+
+    on_close: function() {
         this.close();
     },
- 
+
     on_error: function () {
         this.close();
     },
-    
+
     close: function () {
         if(this.sock){
             this.sock.close();
             this.sock = null;
         }
     },
-	  connect: function (url) {
+	connect: function(url) {
         this.sock = new WebSocket(url);
         this.sock.binaryType = "arraybuffer";
         this.sock.onopen = this.on_open.bind(this);
@@ -31,9 +28,9 @@ var websocket = {
         this.sock.onclose = this.on_close.bind(this);
         this.sock.onerror = this.on_error.bind(this);
     },
-	
-	    send_data: function (data) {
+
+	send_data: function (data) {
         this.sock.send(data);
     }
 }
-module.exports = websocket;
+module.exports = {websocket};
