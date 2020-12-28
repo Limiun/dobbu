@@ -1,17 +1,35 @@
 package com.example.demo.utils;
 
+
+import com.example.demo.game.button.ButtonInfo;
+import com.example.demo.game.button.C2S_ButtonTestMessageHandler;
+import com.example.demo.game.msg.C2S_MsgInfoMessageHandler;
+import com.example.demo.game.msg.msgInfo;
+import com.google.protobuf.MessageLite;
+import com.google.protobuf.MessageLiteOrBuilder;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.MessageToMessageDecoder;
+import io.netty.handler.codec.MessageToMessageEncoder;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
-import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
+import io.netty.handler.codec.http.websocketx.*;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.stream.ChunkedWriteHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+
+import static io.netty.buffer.Unpooled.wrappedBuffer;
+
 
 /**
  * NettyServer Netty服务器配置
@@ -24,7 +42,15 @@ import io.netty.handler.stream.ChunkedWriteHandler;
  * @date 2019-06-12
  */
 public class NettyServer {
+
+    private static final Logger log = LoggerFactory.getLogger(NettyServer.class);
     private final int port;
+
+    @Autowired
+    private C2S_ButtonTestMessageHandler c2s_buttonTestMessageHandler;
+    @Autowired
+    private C2S_MsgInfoMessageHandler c2s_msgInfoMessageHandler;
+
 
     public NettyServer(int port) {
         this.port = port;
@@ -47,13 +73,80 @@ public class NettyServer {
                             System.out.println("收到新连接");
                             //websocket协议本身是基于http协议的，所以这边也要使用http解编码器
                             ch.pipeline().addLast(new HttpServerCodec());
-                            //以块的方式来写的处理器
+
+
+                            //以块的方式来写的处理器  支持大数据流写入
                             ch.pipeline().addLast(new ChunkedWriteHandler());
-                            ch.pipeline().addLast(new HttpObjectAggregator(8192));
+                            // 支持参数对象解析， 比如POST参数， 设置聚合内容的最大长度
+                            ch.pipeline().addLast(new HttpObjectAggregator(65536));
                             ch.pipeline().addLast(new MyWebSocketHandler());
-                            ch.pipeline().addLast(new WebSocketServerProtocolHandler("/ws", "WebSocket", true, 65536 * 10));
+
+//                            ch.pipeline().addLast(new WebSocketServerProtocolHandler("/ws", "WebSocket", true, 65536 * 10));
+                            ch.pipeline().addLast(new WebSocketServerProtocolHandler("/ws", null, true));
+
+                            //解码器，通过Google Protocol Buffers序列化框架动态的切割接收到的ByteBuf
+                            ch.pipeline().addLast(new ProtobufVarint32FrameDecoder());
+                            //Google Protocol Buffers 长度属性编码器
+                            ch.pipeline().addLast(new ProtobufVarint32LengthFieldPrepender());
+
+
+                            // 协议包解码
+                            ch.pipeline().addLast(new MessageToMessageDecoder<WebSocketFrame>() {
+                                @Override
+                                protected void decode(ChannelHandlerContext ctx, WebSocketFrame frame, List<Object> objs) throws Exception {
+                                    log.info("received client msg ------------------------");
+                                    if (frame instanceof TextWebSocketFrame) {
+                                        // 文本消息
+                                        TextWebSocketFrame textFrame = (TextWebSocketFrame)frame;
+                                        log.info("MsgType is TextWebSocketFrame");
+                                    } else if (frame instanceof BinaryWebSocketFrame) {
+                                        // 二进制消息
+                                        ByteBuf buf = ((BinaryWebSocketFrame) frame).content();
+                                        objs.add(buf);
+                                        // 自旋累加
+                                        buf.retain();
+                                        log.info("MsgType is BinaryWebSocketFrame");
+                                    } else if (frame instanceof PongWebSocketFrame) {
+                                        // PING存活检测消息
+                                        log.info("MsgType is PongWebSocketFrame ");
+                                    } else if (frame instanceof CloseWebSocketFrame) {
+                                        // 关闭指令消息
+                                        log.info("MsgType is CloseWebSocketFrame");
+                                        ch.close();
+                                    }
+
+                                }
+                            });
+                            // 协议包编码
+                            ch.pipeline().addLast(new MessageToMessageEncoder<MessageLiteOrBuilder>() {
+                                @Override
+                                protected void encode(ChannelHandlerContext ctx, MessageLiteOrBuilder msg, List<Object> out) throws Exception {
+                                    ByteBuf result = null;
+                                    if (msg instanceof MessageLite) {
+                                        // 没有build的Protobuf消息
+                                        result = wrappedBuffer(((MessageLite) msg).toByteArray());
+                                    }
+                                    if (msg instanceof MessageLite.Builder) {
+                                        // 经过build的Protobuf消息
+                                        result = wrappedBuffer(((MessageLite.Builder) msg).build().toByteArray());
+                                    }
+                                    // 将Protbuf消息包装成Binary Frame 消息
+                                    WebSocketFrame frame = new BinaryWebSocketFrame(result);
+                                    out.add(frame);
+                                }
+                            });
+                            // Protobuf消息解码器
+                            ch.pipeline().addLast(new ProtobufDecoder(ButtonInfo.UserMsg.getDefaultInstance()));
+                            // 自定义数据处理器
+                            ch.pipeline().addLast(c2s_buttonTestMessageHandler);
+                            // Protobuf消息解码器
+                            ch.pipeline().addLast(new ProtobufDecoder(msgInfo.Login.getDefaultInstance()));
+                            // 自定义数据处理器
+                            ch.pipeline().addLast(c2s_msgInfoMessageHandler);
                         }
                     });
+
+
             ChannelFuture cf = sb.bind().sync(); // 服务器异步创建绑定
             System.out.println(NettyServer.class + " 启动正在监听： " + cf.channel().localAddress());
             cf.channel().closeFuture().sync(); // 关闭服务器通道

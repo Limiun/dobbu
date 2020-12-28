@@ -3,7 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.bean.User;
 import com.example.demo.service.UserService;
 import com.example.demo.utils.SimpleMD5;
-import com.sun.deploy.net.HttpResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.*;
