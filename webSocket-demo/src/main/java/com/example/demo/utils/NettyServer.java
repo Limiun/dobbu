@@ -13,6 +13,7 @@ import com.google.protobuf.MessageLite;
 import com.google.protobuf.MessageLiteOrBuilder;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
@@ -26,6 +27,7 @@ import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.stream.ChunkedWriteHandler;
+import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,10 +62,6 @@ public class NettyServer {
 //    @Autowired
 //    private C2S_UserInfoMessageHandler c2s_userInfoMessageHandler;
 
-//    @PostConstruct
-//    public void init(){
-//        c2s_msgInfoMessageHandler = new C2S_MsgInfoMessageHandler();
-//    }
 
     public NettyServer(int port) {
         this.port = port;
@@ -72,6 +70,7 @@ public class NettyServer {
     public void start() throws Exception {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
 
+        final PbServerHandler handler = new PbServerHandler();
         EventLoopGroup group = new NioEventLoopGroup();
         try {
             ServerBootstrap sb = new ServerBootstrap();
@@ -90,7 +89,7 @@ public class NettyServer {
                             ch.pipeline().addLast(new ChunkedWriteHandler());
                             // 支持参数对象解析， 比如POST参数， 设置聚合内容的最大长度
                             ch.pipeline().addLast(new HttpObjectAggregator(65536));
-                            ch.pipeline().addLast(new MyWebSocketHandler());
+
 
 //                            ch.pipeline().addLast(new WebSocketServerProtocolHandler("/ws", "WebSocket", true, 65536 * 10));
                             ch.pipeline().addLast(new WebSocketServerProtocolHandler("/ws", null, true));
@@ -106,13 +105,24 @@ public class NettyServer {
                                 @Override
                                 protected void decode(ChannelHandlerContext ctx, WebSocketFrame frame, List<Object> objs) throws Exception {
                                     log.info("received client msg ------------------------");
+                                    int msgid = 0;
+                                    String buf2 = null;
+                                    ByteBuf buf3 = null;
                                     if (frame instanceof TextWebSocketFrame) {
                                         // 文本消息
                                         TextWebSocketFrame textFrame = (TextWebSocketFrame)frame;
+                                        String s = textFrame.text();
+                                        if (s.contains("|")){
+                                            String[] buf1 = s.split("\\|");
+                                            msgid = Integer.valueOf(buf1[0]);
+                                            buf2 = buf1[1];
+                                            buf3 = Unpooled.copiedBuffer(buf2, CharsetUtil.UTF_8);
+                                        }
                                         log.info("MsgType is TextWebSocketFrame");
                                     } else if (frame instanceof BinaryWebSocketFrame) {
                                         // 二进制消息
                                         ByteBuf buf = ((BinaryWebSocketFrame) frame).content();
+                                        String b = buf.toString();
                                         objs.add(buf);
                                         // 自旋累加
                                         buf.retain();
@@ -147,18 +157,23 @@ public class NettyServer {
                                 }
                             });
 
-                            // Protobuf消息解码器
-                            ch.pipeline().addLast(new ProtobufDecoder(ButtonInfo.UserMsg.getDefaultInstance()));
-                            // Protobuf消息解码器
-                            ch.pipeline().addLast(new ProtobufDecoder(msgInfo.Login.getDefaultInstance()));
-                            ch.pipeline().addLast(new ProtobufDecoder(UserInfo.UserMsg.getDefaultInstance()));
-                            ch.pipeline().addLast(new ProtobufDecoder(Test1.test1Msg.getDefaultInstance()));
-                            // 自定义数据处理器
-                            ch.pipeline().addLast(new C2S_ButtonTestMessageHandler());
-                            // 自定义数据处理器
-                            ch.pipeline().addLast(new C2S_MsgInfoMessageHandler());
-                            ch.pipeline().addLast(new C2S_UserInfoMessageHandler());
+
+//                            // 自定义数据处理器
+//                            ch.pipeline().addLast(new ProtobufDecoder(msgInfo.Login.getDefaultInstance()));
+                            ch.pipeline().addLast(new ProtobufDecoder(Test1.Message.getDefaultInstance()));
                             ch.pipeline().addLast(new C2S_RoleTest1MessageHandler());
+//                            ch.pipeline().addLast(new ProtobufDecoder(UserInfo.UserMsg.getDefaultInstance()));
+//
+//                            ch.pipeline().addLast(new C2S_MsgInfoMessageHandler());
+//                            ch.pipeline().addLast(new C2S_UserInfoMessageHandler());
+//                            ch.pipeline().addLast(new C2S_RoleTest1MessageHandler());
+
+                            // Protobuf消息解码器
+//                            ch.pipeline().addLast(new ProtobufDecoder(ButtonInfo.UserMsg.getDefaultInstance()));
+                            // Protobuf消息解码器
+
+
+//                            ch.pipeline().addLast(new MyWebSocketHandler()); //测试用于接收test的消息，这里暂时注释掉
                         }
                     });
 

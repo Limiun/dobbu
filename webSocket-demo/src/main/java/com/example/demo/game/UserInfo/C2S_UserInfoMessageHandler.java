@@ -19,5 +19,10 @@ public class C2S_UserInfoMessageHandler extends SimpleChannelInboundHandler<User
         System.out.println("UserInfo+++++++++++++++++++"+userMsg.getAge());
         System.out.println("UserInfo+++++++++++++++++++"+userMsg.getName());
         System.out.println("UserInfo+++++++++++++++++++"+userMsg.getId());
+//        channelHandlerContext.pipeline().addLast(new ProtobufDecoder(Test1.test1Msg.getDefaultInstance()));
+//        channelHandlerContext.pipeline().addLast(new C2S_RoleTest1MessageHandler());
+
+
+
     }
 }

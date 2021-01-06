@@ -27,7 +27,8 @@ public class C2S_MsgInfoMessageHandler extends SimpleChannelInboundHandler<msgIn
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, msgInfo.Login login) throws Exception {
         System.out.println(login.getName());
-        System.out.println("c2s");
+        System.out.println("MSGInfoMes");
+
 
     }
 }

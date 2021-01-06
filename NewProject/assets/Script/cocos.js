@@ -5,6 +5,7 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 var websocket = require("websocket");
+var role = require("role");
 cc.Class({
     extends: cc.Component,
 
@@ -86,14 +87,16 @@ cc.Class({
      update (dt) {
 		 // 根据当前加速度方向每帧更新速度
         if (this.accLeft) {
-			
-			let test = $root.test1Msg.create({id:1,name:"yxy",age:22,state:1});
+			let test1 = $root.Test1Msg.create({id:1,name:"yxy",age:22,state:1});
+			let game1 = $root.Game.create({gamename:"lztl",num:33});
+			let test = $root.Message.create({msgBody:2,test1:null,game:game1});
 			console.log("1.finish@@@@@@@@@@"+test);
-			let messageBuf = $root.test1Msg.encode(test).finish();////获取二进制数据，一定要注意使用finish函数
+			let messageBuf1 = $root.Test1Msg.encode(test1).finish()
+			let messageBuf = $root.Message.encode(test).finish();////获取二进制数据，一定要注意使用finish函数
 			console.log("2.finish@@@@@@@@@@"+messageBuf);
+			console.log("2.finish@@@@@@@@@@"+messageBuf1);
 			websocket.send_data(messageBuf);
 			console.log("3.finish@@@@@@@@@@");
-	
             this.xSpeed -= this.accel * dt;
         }
         else if (this.accRight) {

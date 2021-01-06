@@ -1,6 +1,22 @@
 syntax="proto3";
 
-message test1Msg {  
+message Message {
+	enum MsgType{
+	    UNIVERSAL = 0;
+		TEST1 = 1; //对应test1Msg
+		GAME = 2; //对应game
+	
+	}
+	MsgType msgType = 1;
+	oneof msgBody{
+		Test1Msg test1 = 2;
+		Game game = 3;
+	}
+	
+	
+}
+
+message Test1Msg {  
       
      // ID  
        int32 id = 1;  
@@ -13,4 +29,10 @@ message test1Msg {
 	  
 	 // 状态 
       int32 state = 4;
+}
+message Game {
+	//game
+	string gamename = 1;
+	//分数
+	int32 num = 2;
 }

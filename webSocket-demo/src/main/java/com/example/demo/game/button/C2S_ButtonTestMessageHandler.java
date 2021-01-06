@@ -26,7 +26,7 @@ public class C2S_ButtonTestMessageHandler  extends SimpleChannelInboundHandler<B
     public static ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, ButtonInfo.UserMsg userMsg) throws Exception {
-        System.out.println("testbuttom");
+        System.out.println("buttomtest");
         userMsg.getId();
 
     }
