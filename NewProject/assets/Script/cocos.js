@@ -89,9 +89,11 @@ cc.Class({
         if (this.accLeft) {
 			let test1 = $root.Test1Msg.create({id:1,name:"yxy",age:22,state:1});
 			let game1 = $root.Game.create({gamename:"lztl",num:33});
+			let game2 = $root.Game.create({gamename:"zjd",num:25});
 			let test = $root.Message.create({msgBody:2,test1:null,game:game1});
+			test.game = game2;
 			console.log("1.finish@@@@@@@@@@"+test);
-			let messageBuf1 = $root.Test1Msg.encode(test1).finish()
+			let messageBuf1 = $root.Test1Msg.encode(test1).finish();
 			let messageBuf = $root.Message.encode(test).finish();////获取二进制数据，一定要注意使用finish函数
 			console.log("2.finish@@@@@@@@@@"+messageBuf);
 			console.log("2.finish@@@@@@@@@@"+messageBuf1);

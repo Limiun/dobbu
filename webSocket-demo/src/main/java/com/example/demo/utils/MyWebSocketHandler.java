@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import com.example.demo.game.msg.msgInfo;
 
+import com.example.demo.game.role_test1.Test1;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -118,16 +119,16 @@ public class MyWebSocketHandler extends SimpleChannelInboundHandler<TextWebSocke
 
     }
 
-    private void sendAllMessage(String message){
+    public void sendAllMessage(String message){
         //收到信息后，群发给所有channel
         MyChannelHandlerPool.channelGroup.writeAndFlush( new TextWebSocketFrame(message));
     }
 
-    private void sendAllMessageByteBuf(ByteBuf message){
+    public void sendAllMessageByteBuf(ByteBuf message){
         //收到信息后，群发给所有channel
-
         MyChannelHandlerPool.channelGroup.writeAndFlush(new BinaryWebSocketFrame(message));
     }
+
 
     private static Map getUrlParams(String url){
         Map<String,String> map = new HashMap<>();

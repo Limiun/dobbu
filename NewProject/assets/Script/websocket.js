@@ -1,4 +1,7 @@
-// websocket.js 导出的自己封装的websocket模块
+/** 
+websocket.js 导出的自己封装的websocket模块
+   这个模块不要在里面写具体的功能
+**/
 var websocket = {
     sock: null,  // 连接的socket 对象 WebSocket, h5标准对象;
  
@@ -11,7 +14,11 @@ var websocket = {
  
     // 客户端收到数据的时候
     on_message: function(event) {
-        console.log("#####", event.data);
+		 console.log("#####1.这是客户端接收返回来的数据", event.data);
+		let msg = new Uint8Array(event.data);
+        console.log("#####2.这是客户端接收返回来的数据", msg);
+		let message = $root.Message.decode(msg);
+		//console.log(message.msgType);
     },
  
     // 客户端收到socket 关闭的时间的时候调用;
