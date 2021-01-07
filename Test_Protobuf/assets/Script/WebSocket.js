@@ -14,7 +14,7 @@ var websocket = {
         this.close();
     },
 
-    close: function () {
+    close: function () {alipay
         if(this.sock){
             this.sock.close();
             this.sock = null;

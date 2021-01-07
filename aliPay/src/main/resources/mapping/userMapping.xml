@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.example.demo.bean.user.UserBean">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="userName" jdbcType="VARCHAR" property="userName" />
+        <result column="passWord" jdbcType="VARCHAR" property="passWord" />
+        <result column="sex" jdbcType="INTEGER" property="sex" />
+        <result column="cardId" jdbcType="VARCHAR" property="cardId" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="startDate" jdbcType="INTEGER" property="startDate" />
+        <result column="phone" jdbcType="INTEGER" property="phone" />
+        <result column="extendMap" jdbcType="VARCHAR" property="extendMap" />
+    </resultMap>
+
+    <insert id="registUser" parameterType="com.example.demo.bean.user.UserBean" keyProperty="id">
+        insert into user(userName,passWord,sex,cardId,email,startDate,phone,extendMap) values (#{userName},#{passWord},#{sex},#{cardId},#{email},#{startDate},#{phone},#{extendMap})
+    </insert>
+
+    <select id="loginUser" resultType="com.example.demo.bean.user.UserBean">
+        select * from user where userName = #{userName} and passWord = #{passWord}
+    </select>
+
+</mapper>

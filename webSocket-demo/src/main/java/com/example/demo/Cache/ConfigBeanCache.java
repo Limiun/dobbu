@@ -4,24 +4,25 @@ package com.example.demo.Cache;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class SaveCache {
-    private static SaveCache SaveCache;
+public class ConfigBeanCache {
+    private volatile static ConfigBeanCache configBeanCache;
     private Map<Object, Object> cacheItems;
 
-    public SaveCache() {
+    public ConfigBeanCache() {
         cacheItems = new ConcurrentHashMap<Object, Object>();
     }
 
     /**
      * 获取唯一实例
      **/
-    public static SaveCache getMe() {
-        if (SaveCache == null) {
-            synchronized (SaveCache.class) {
-                if (SaveCache == null) SaveCache = new SaveCache();
+    public static ConfigBeanCache getMe() {
+        if (configBeanCache == null) {
+            synchronized (ConfigBeanCache.class) {
+                if (configBeanCache == null)
+                    configBeanCache = new ConfigBeanCache();
             }
         }
-        return SaveCache;
+        return configBeanCache;
     }
 
     /**
