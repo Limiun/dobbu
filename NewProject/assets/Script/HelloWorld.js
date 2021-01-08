@@ -14,7 +14,7 @@ cc.Class({
     // use this for initialization
     onLoad: function () {
 		console.log("test@@@@@@@@@@");
-		websocket.connect("ws://127.0.0.1:12345/ws");
+		websocket.connect("ws://192.168.13.131:12345/ws");
 		//var role = this;
 		//let test = $root.test1Msg.create({id:1,name:"yxy",age:22,state:1});
 		//console.log("finish@@@@@@@@@@"+test);

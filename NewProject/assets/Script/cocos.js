@@ -87,6 +87,7 @@ cc.Class({
      update (dt) {
 		 // 根据当前加速度方向每帧更新速度
         if (this.accLeft) {
+			/**以下这是一个简单和后端通信的demo，$root.Message，Message作为最外层的传输协议，里面带上具体的哪一个协议和协议id*/
 			let test1 = $root.Test1Msg.create({id:1,name:"yxy",age:22,state:1});
 			let game1 = $root.Game.create({gamename:"lztl",num:33});
 			let game2 = $root.Game.create({gamename:"zjd",num:25});
@@ -97,8 +98,9 @@ cc.Class({
 			let messageBuf = $root.Message.encode(test).finish();////获取二进制数据，一定要注意使用finish函数
 			console.log("2.finish@@@@@@@@@@"+messageBuf);
 			console.log("2.finish@@@@@@@@@@"+messageBuf1);
-			websocket.send_data(messageBuf);
+			websocket.send_data(messageBuf); //这里是发送信息给后端调用的websocket里面的send_data()
 			console.log("3.finish@@@@@@@@@@");
+			/**以上这是一个简单和后端通信的demo*/
             this.xSpeed -= this.accel * dt;
         }
         else if (this.accRight) {

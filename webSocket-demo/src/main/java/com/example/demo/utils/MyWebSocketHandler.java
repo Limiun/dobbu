@@ -3,12 +3,15 @@ package com.example.demo.utils;
 
 import com.alibaba.fastjson.JSONObject;
 
+import com.example.demo.MessageType;
 import com.example.demo.game.msg.msgInfo;
 
 import com.example.demo.game.role_test1.Test1;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.group.ChannelGroup;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
@@ -127,6 +130,36 @@ public class MyWebSocketHandler extends SimpleChannelInboundHandler<TextWebSocke
     public void sendAllMessageByteBuf(ByteBuf message){
         //收到信息后，群发给所有channel
         MyChannelHandlerPool.channelGroup.writeAndFlush(new BinaryWebSocketFrame(message));
+    }
+
+    public void sendMessageByMes(Object msg,int msgId){
+        ByteBuf buf = getByteBuf(msg,msgId);
+        MyChannelHandlerPool.channelGroup.writeAndFlush(new BinaryWebSocketFrame(buf));
+    }
+
+    public void sendMessageByPlayerWeb(ChannelHandlerContext channelHandlerContext,Object msg,int msgId){
+        ByteBuf buf = getByteBuf(msg,msgId);
+        channelHandlerContext.channel().writeAndFlush(new BinaryWebSocketFrame(buf));
+    }
+    private ByteBuf getByteBuf(Object msg,int msgId){
+        Test1.Message.Builder message = Test1.Message.newBuilder();
+        message.setMsgType(MessageType.getMessageIdByMesId(msgId).getMsgType());
+        switch (msgId){
+            case 1:
+                msg = (Test1.Message) msg;
+                break;
+            case 2:
+                msg = (Test1.Test1Msg) msg;
+                message.setTest1(((Test1.Test1Msg) msg).toBuilder());
+                break;
+            case 3:
+                msg = (Test1.Game) msg;
+                message.setGame(((Test1.Game) msg).toBuilder());
+                break;
+        }
+        byte[] b=  message.build().toByteArray();
+        ByteBuf buf =  Unpooled.wrappedBuffer(b);
+        return buf;
     }
 
 

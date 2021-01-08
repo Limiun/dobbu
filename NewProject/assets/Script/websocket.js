@@ -18,7 +18,13 @@ var websocket = {
 		let msg = new Uint8Array(event.data);
         console.log("#####2.这是客户端接收返回来的数据", msg);
 		let message = $root.Message.decode(msg);
-		//console.log(message.msgType);
+		/**
+		这里的message拿到后应该做一个分发的处理，
+		取到里面具体的消息（根据消息id）然后转到对应的处理方法里面去
+		具体详细的功能在单个的里面去处理
+		*/
+		console.log("########3.这是msgType",message.msgType);
+		console.log("########3.这是msg",message);
     },
  
     // 客户端收到socket 关闭的时间的时候调用;
