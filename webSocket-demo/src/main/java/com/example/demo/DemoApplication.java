@@ -1,7 +1,8 @@
 package com.example.demo;
 
 
-import com.example.demo.Cache.SaveCache;
+import com.example.demo.Cache.ConfigBeanCache;
+
 import com.example.demo.bean.test;
 import com.example.demo.utils.ExcelConvert;
 import com.example.demo.utils.MyException;
@@ -16,8 +17,8 @@ public class DemoApplication {
 
     public static void main(String[] args) {
         try {
-            List<test> testList = ExcelConvert.getBean("F:\\test.xls",test.class);
-            SaveCache.getMe().putCacheItem("test",testList);
+            List<test> testList = ExcelConvert.getBean("F:\\Game\\First_GameData\\game_config\\test.xls",test.class);
+            ConfigBeanCache.getMe().putCacheItem("test",testList);
             System.out.println(testList.size());
             System.out.println(testList);
         } catch (MyException e) {

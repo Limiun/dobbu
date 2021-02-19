@@ -1,11 +1,14 @@
 syntax="proto3";
 
-Message RoleInfo{
-	int id = 1;
-	String name = 2;
-	int luckyValue = 3;
-	int moodValue = 4;
-	int money = 5;
-	Map<int,int> eventFinishedData = 6 ;
+message RoleInfo{
+	int32 id = 1;
+	string name = 2;
+	int32 luckyValue = 3;
+	int32 moodValue = 4;
+	int32 money = 5;
+	map<int32,int32> eventFinishedData = 6;
 	
+}
+message WeatherInfo{
+    int32 id = 1;
 }

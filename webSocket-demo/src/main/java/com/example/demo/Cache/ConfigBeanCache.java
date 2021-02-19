@@ -6,10 +6,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ConfigBeanCache {
     private volatile static ConfigBeanCache configBeanCache;
-    private Map<Object, Object> cacheItems;
+    private volatile Map<Object, Object> configBeanCacheItems;
 
     public ConfigBeanCache() {
-        cacheItems = new ConcurrentHashMap<Object, Object>();
+        configBeanCacheItems = new ConcurrentHashMap<Object, Object>();
     }
 
     /**
@@ -29,7 +29,7 @@ public class ConfigBeanCache {
      * 清空cache
      **/
     private void clearAllItems() {
-        cacheItems.clear();
+        configBeanCacheItems.clear();
     }
 
     /**
@@ -38,8 +38,8 @@ public class ConfigBeanCache {
      * @return Object cacheItem
      */
     public  Object getCacheItem(Object key){
-        if (cacheItems.containsKey(key)){
-            return cacheItems.get(key);
+        if (configBeanCacheItems.containsKey(key)){
+            return configBeanCacheItems.get(key);
         }
         return null;
     }
@@ -51,13 +51,13 @@ public class ConfigBeanCache {
      * @param value 存放的值
      * */
     public Boolean putCacheItem(Object key, Object value) {
-        if (!cacheItems.containsKey(key)) {
-            cacheItems.put(key, value);
+        if (!configBeanCacheItems.containsKey(key)) {
+            configBeanCacheItems.put(key, value);
             return true;
         }
         if ((int)key==1){
-            cacheItems.remove(1);
-            cacheItems.put(key,value);
+            configBeanCacheItems.remove(1);
+            configBeanCacheItems.put(key,value);
             return true;
         }
         return false;
@@ -69,8 +69,8 @@ public class ConfigBeanCache {
      * @param key 唯一标识
      */
     public void removeCacheItem(Object key) {
-        if (cacheItems.containsKey(key)) {
-            cacheItems.remove(key);
+        if (configBeanCacheItems.containsKey(key)) {
+            configBeanCacheItems.remove(key);
         }
     }
 
@@ -80,6 +80,6 @@ public class ConfigBeanCache {
      * @return size
      */
     public int getSize() {
-        return cacheItems.size();
+        return configBeanCacheItems.size();
     }
 }

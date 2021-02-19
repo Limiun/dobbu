@@ -1,6 +1,7 @@
 package com.example.demo.game.role_test1;
 
-import com.example.demo.Cache.SaveCache;
+
+import com.example.demo.Cache.ConfigBeanCache;
 import com.example.demo.MessageType;
 import com.example.demo.bean.test;
 import com.example.demo.game.UserInfo.C2S_UserInfoMessageHandler;
@@ -43,20 +44,25 @@ public class C2S_RoleTest1MessageHandler extends SimpleChannelInboundHandler<Tes
         builder.setAge(23);
         builder.setName("zxk");
         builder.setState(0);
-        List<test> testList = (List<test>) SaveCache.getMe().getCacheItem("test");
-        int msgType = message.getMsgBodyCase().getNumber()-1;
-       // Test1.Message.MsgType msgType = message.getMsgType();
-        if (msgType == Test1.Message.MsgType.TEST1.getNumber()){
 
-//           c2S_buttonTestMessageHandler.channelRead0(channelHandlerContext,);
-        }else if (msgType == Test1.Message.MsgType.GAME.getNumber()){
-            System.out.println("GAME");
-            Test1.Test1Msg test1Msg = builder.build();
-//            byte[] b= test1Msg.toByteArray();
-//            ByteBuf buf =  Unpooled.wrappedBuffer(b);
-            //webSocket.sendAllMessageByteBuf(buf);
-            //webSocket.sendMessageByMes(test1Msg, MessageType.test1Msg.getMsgId());
-            webSocket.sendMessageByPlayerWeb(channelHandlerContext,test1Msg, MessageType.test1Msg.getMsgId());
-        }
+        List<test> testList = (List<test>) ConfigBeanCache.getMe().getCacheItem("test");
+        int msgType = message.getMsgBodyCase().getNumber()-1;
+        MessageType.getC2sMessageHandler(msgType).action();
+       // Test1.Message.MsgType msgType = message.getMsgType();
+
+
+
+
+//        if (msgType == Test1.Message.MsgType.TEST1.getNumber()){
+////          c2S_buttonTestMessageHandler.channelRead0(channelHandlerContext,);
+//        }else if (msgType == Test1.Message.MsgType.GAME.getNumber()){
+//            System.out.println("GAME");
+//            Test1.Test1Msg test1Msg = builder.build();
+////            byte[] b= test1Msg.toByteArray();
+////            ByteBuf buf =  Unpooled.wrappedBuffer(b);
+//            //webSocket.sendAllMessageByteBuf(buf);
+//            //webSocket.sendMessageByMes(test1Msg, MessageType.test1Msg.getMsgId());
+//            webSocket.sendMessageByPlayerWeb(channelHandlerContext,test1Msg, MessageType.test1Msg.getMsgId());
+//        }
     }
 }

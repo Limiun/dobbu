@@ -42,7 +42,7 @@ public class MyWebSocketHandler extends SimpleChannelInboundHandler<TextWebSocke
         //首次连接是FullHttpRequest，处理参数 by zhengkai.blog.csdn.net
         if (null != msg && msg instanceof FullHttpRequest) {
             FullHttpRequest request = (FullHttpRequest) msg;
-            String uri = request.uri();
+            String uri = request.getUri();
             Map paramMap=getUrlParams(uri);
             System.out.println("接收到的参数是："+ JSONObject.toJSONString(paramMap));
             //如果url包含参数，需要处理

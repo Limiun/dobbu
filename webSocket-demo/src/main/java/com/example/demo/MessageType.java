@@ -1,20 +1,27 @@
 package com.example.demo;
+import com.example.demo.game.initGame.C2S_InitGameMessageHandler;
+import com.example.demo.game.msg.C2S_MsgInfoMessageHandler;
 import com.example.demo.game.role_test1.Test1.Message.*;
 
 import com.example.demo.game.role_test1.Test1;
 
 public enum MessageType {
-    Messgae(1,"最外层消息",MsgType.UNIVERSAL),
-    test1Msg(2,"测试1",MsgType.TEST1),
-    game(3,"测试2游戏",MsgType.GAME)
+    Messgae(1,"最外层消息",MsgType.UNIVERSAL, C2S_InitGameMessageHandler.getMe()),
+    test1Msg(2,"测试1",MsgType.TEST1, C2S_InitGameMessageHandler.getMe()),
+    game(3,"测试2游戏",MsgType.GAME, C2S_MsgInfoMessageHandler.getMe())
     ;
     private int msgId;
+
     private String value;
+
     private  MsgType msgType;
-    MessageType(int msgId, String value, MsgType msgType) {
+
+    private C2S_MessageScript messageScript;
+    MessageType(int msgId, String value, MsgType msgType,C2S_MessageScript messageScript) {
         this.msgId = msgId;
         this.value = value;
         this.msgType = msgType;
+        this.messageScript = messageScript;
     }
 
     public int getMsgId() {
@@ -37,6 +44,14 @@ public enum MessageType {
         return msgType;
     }
 
+    public C2S_MessageScript getMessageScript() {
+        return messageScript;
+    }
+
+    public void setMessageScript(C2S_MessageScript messageScript) {
+        this.messageScript = messageScript;
+    }
+
     public void setMsgType(Test1.Message.MsgType msgType) {
         this.msgType = msgType;
     }
@@ -45,6 +60,14 @@ public enum MessageType {
         for (MessageType messageType:values()){
             if (msgId==messageType.getMsgId()){
                 return messageType;
+            }
+        }
+        return null;
+    }
+    public static C2S_MessageScript getC2sMessageHandler(int msgId){
+        for (MessageType messageType:values()){
+            if (msgId==messageType.getMsgId()){
+                return messageType.messageScript;
             }
         }
         return null;

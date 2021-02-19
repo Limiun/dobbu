@@ -1,0 +1,26 @@
+syntax="proto3";
+import "init.proto"
+message GameMessage{
+	enum MsgType{
+		UNIVERSAL = 0;
+		C2S_initGameMessage = 2;
+		S2C_initGameMessage = 3;
+		
+	}
+	MsgType msgType = 1;
+	one of msgBody{
+		C2S_initGameMessage c2s_initGame= 2;
+		S2C_initGameMessage s2c_initGame= 3;
+	}
+}
+
+
+message C2S_initGameMessage{
+	//携带金钱
+	int money = 1;
+}
+message S2C_initGameMessage(
+	//游戏角色信息
+	RoleInfo role = 1;
+	WeatherInfo weather = 2;
+)

@@ -1,0 +1,15 @@
+syntax="proto3";
+
+Message RoleInfo{
+	int id = 1;
+	String name = 2;
+	int luckyValue = 3;
+	int moodValue = 4;
+	int money = 5;
+	Map<int,int> eventFinishedData = 6 ;
+	
+}
+
+Message WeatherInfo{
+	int id = 1;
+}

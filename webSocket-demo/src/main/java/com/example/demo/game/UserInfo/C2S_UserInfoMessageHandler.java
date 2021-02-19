@@ -1,5 +1,6 @@
 package com.example.demo.game.UserInfo;
 
+import com.example.demo.game.initGame.InitGameManager;
 import com.example.demo.utils.MyChannelHandlerPool;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -21,7 +22,6 @@ public class C2S_UserInfoMessageHandler extends SimpleChannelInboundHandler<User
         System.out.println("UserInfo+++++++++++++++++++"+userMsg.getId());
 //        channelHandlerContext.pipeline().addLast(new ProtobufDecoder(Test1.test1Msg.getDefaultInstance()));
 //        channelHandlerContext.pipeline().addLast(new C2S_RoleTest1MessageHandler());
-
 
 
     }
